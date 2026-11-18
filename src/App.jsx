@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import QRCodeStyling from 'qr-code-styling'
 import { API, saveRecord, updateRecord, getRecord, listRecords, getSettings, setDomain, nowId } from './api.js'
 import './App.css'
-
+import ajeerLogoImg from "./assets/ajeer-logo.png";
+import hrsdStarImg from "./assets/hrsd-star.png";
 const QR_LOOK = {
   type: 'svg',
   margin: 1,
@@ -460,53 +461,64 @@ export default function App() {
   <div className="cert-top__cell cert-top__cell--r">
     <div className="cert-marks">
       <div className="ajeer-wordmark">
-        <span className="ajeer-wordmark__ar">أجير</span>
-        <span className="ajeer-wordmark__en">AJEER</span>
+        <div className="ajeer-emblem" aria-hidden="true">
+<img
+            src={hrsdStarImg}
+            alt="أجير"
+            className="top-ajeer-logo"
+          />
       </div>
-      <div className="ajeer-emblem" aria-hidden="true">
-        <svg width="28" height="28" viewBox="0 0 32 32">
-          <path d="M16 2 L20 12 L30 14 L22 21 L24 30 L16 25 L8 30 L10 21 L2 14 L12 12 Z" fill="#00a651" />
-          <path d="M16 6 L19 13 L26 14 L20 19 L22 26 L16 22 L10 26 L12 19 L6 14 L13 13 Z" fill="#ffb81c" />
-          <path d="M16 10 L18 15 L23 16 L18 20 L20 25 L16 21 L12 25 L14 20 L9 16 L14 15 Z" fill="#ed1c24" />
-        </svg>
+ 
       </div>
-      <div className="ministry-text">
+
+   <div className="ministry-text">
         <span>الموارد البشرية</span>
         <span>والتنمية الاجتماعية</span>
       </div>
+
+  <div className="ajeer-emblem" aria-hidden="true">
+<img
+            src={ajeerLogoImg}
+            alt="أجير"
+            className="top-ajeer-logo"
+          />
+      </div>
+
+
+   
     </div>
   </div>
 
   {/* Center Cell: Title */}
   <div className="cert-top__cell cert-top__cell--c">
     <h1 className="cert-main-title">
-      {form.title || 'تصريح أجير - الإعارة'}
+     تصريح أجير – تعاقد أجير
     </h1>
   </div>
 
   {/* Left Cell (in RTL): QR Code + Permit No + Hint */}
   <div className="cert-top__cell cert-top__cell--l">
     <div className="cert-qr-block">
-      <StyledQr value={qrTarget} size={50} dark={ink} />
+      <StyledQr value={qrTarget} size={100} dark={ink} />
       <span className="cert-qr-no ltr">{form.permitNo || 'TQxxxxxxx'}</span>
       <span className="cert-qr-hint">امسح للتحقق</span>
     </div>
   </div>
 </div>
               {/* QR Code and permit info badge row */}
-              <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '6px 0' }}>
+              {/* <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '6px 0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', border: '1px solid #e2e8f0', padding: '4px 8px', borderRadius: '4px', background: '#f8fafc' }}>
                   <span className="ltr" style={{ fontSize: '12px', fontWeight: 'bold' }}>{form.permitNo || 'TQxxxxxxx'}</span>
                   <StyledQr value={qrTarget} size={36} dark={ink} />
                 </div>
-              </div>
+              </div> */}
 
               {/* Intro paragraph */}
               <p className="cert-intro">
-                هذا نموذج تجريبي لتصميم سجل بيانات العامل، أُعِدّ للاستخدام الداخلي وللعرض على الشاشة فقط. الحقول أدناه
-                قابلة للتعبئة من قاعدة البيانات، وقد وُضِعت لبيان شكل المستند وترتيب بيانات العامل والمنشآت والتصريح داخل
-                الجدول، ولا يُعتد بهذا النموذج لإثبات أي حق أو للتحقق من صحة تواجد أي عامل في مكان تقديم الخدمة.
-              </p>
+               
+
+نشعركم أنه تم التعاقد من قبلنا كجهة مقدمة للخدمة مع الجهة المستفيدة من الخدمة حسب المعلومات المبينة أدناه، ولذلك تم تسجيل معلومات العقد لتكون بحوزة العامل لإثبات عدم مخالفته لنظام العمل ولتقديمها إلى من يهمه الأمر من الجهات المختصة عند طلبها للتحقق من صحة تواجده في مكان تقديم الخدمة
+</p>
 
               {/* 1. بيانات العامل */}
               <table className="cert-tbl">
@@ -598,20 +610,24 @@ export default function App() {
                 <div className="cert-decl__sub">أقر أنا المنشأة المقدمة للخدمة والموضحة بياناتي أعلاه وأتعهد بـ:</div>
                 <ul className="cert-decl__list">
                   <li>
-                    إن العامل حامل هذا النموذج يقر بأن البيانات المدونة فيه صحيحة على مسؤوليته الشخصية، وأنه يعمل لدى
-                    المنشأة ولحسابها بموجب رخصة إقامة سارية المفعول، وأتحمل أي تبعات نظامية تترتب على خلاف ذلك.
+                    
+إن العامل حامل هذا التصريح بحمله له يقر ويتعهد بأن البيانات المدونة فيه صحيحة على مسؤوليته الشخصية، وأنه يعمل لدى المنشأة
+ولحسابها، بموجب رخصة إقامة سارية المفعول. وأتحمل أي تبعات قانونية أو غرامات تترتب على خلاف المذكور أعلاه
                   </li>
-                  <li>الالتزام والتقيد بأنظمة العمل والعمال وأي أنظمة ولوائح وقرارات أخرى ذات علاقة.</li>
+                  <li>. الالتزام والتقيد بأنظمة العمل والعمال وأي أنظمة و لوائح وقرارات أخرى ذات علاقة</li>
                   <li>
-                    أن هذا المستند نموذج تصميمي داخلي، وليس له صفة رسمية، ولا يُعتد به لدى أي جهة للتحقق من أي بيانات.
+       أن الموقع الإلكتروني الخاص بأجير أو القائمين عليه عبارة عن وسيط إلكتروني ما بين الباحثين عن العمل وأصحاب الأعمال فقط وبدون أي التزام قانوني أو غيره على القائمين على موقع أجير.
                   </li>
-                  <li>أي تعديل أو كشط في هذا النموذج يجعله لاغياً.</li>
+                  <li> •أي تعديل أو كشط في هذا التصريح يجعله لاغياً.</li>
                 </ul>
               </div>
 
               {/* Footer */}
               <div className="cert-footer">
-                <div>هذا المستند نموذج تجريبي لأغراض التصميم والعرض الداخلي فقط.</div>
+                <div>للتحقق من صحة هذا التصريح وسريان مفعوله بإمكانك زيارة موقع أجير (https://ajeer.com.sa)</div>
+                <div>* خدمة معتمدة من وزارة الموارد البشرية والتنمية الإجتماعية 
+*</div>
+
               </div>
             </article>
           </section>

@@ -20,6 +20,14 @@
   box-sizing: border-box;
 }
 
+
+
+
+.top-ajeer-logo {
+  height: 36px;
+  object-fit: contain;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -378,17 +386,17 @@ code {
   padding: 8px 10px;
 }
 
-.cert-top__cell--r {
+/* .cert-top__cell--r {
   width: 32.3%;
   border-left: 1px solid var(--cert-line);
   padding: 8px 6px;
-}
+} */
 
-.cert-top__cell--c {
+/* .cert-top__cell--c {
   width: 52.1%;
   border-left: 1px solid var(--cert-line);
   padding: 10px 14px;
-}
+} */
 
 .cert-top__cell--l {
   width: 15.6%;
