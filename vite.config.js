@@ -6,9 +6,21 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'https://ajeerbackend.vercel.app/',
-      '/qr': 'https://ajeerbackend.vercel.app/',
-      '/v': ''
+      '/api': {
+        target: 'https://ajeerbackend.vercel.app',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/qr': {
+        target: 'https://ajeerbackend.vercel.app',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/v': {
+        target: 'https://ajeerbackend.vercel.app',
+        changeOrigin: true,
+        secure: false,
+      }
     }
   }
 })
