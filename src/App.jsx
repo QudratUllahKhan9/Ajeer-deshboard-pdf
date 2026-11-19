@@ -52,7 +52,7 @@ const QR_LOOK = {
 
 function StyledQr({
   value,
-  size = 76,
+  size = 108,
   dark = "#000000",
   className = "cert-qr-box",
 }) {
@@ -172,6 +172,7 @@ export default function App() {
   const [note, setNote] = useState("");
   const [err, setErr] = useState("");
   const [ink, setInk] = useState("#000000");
+  const [qrSize, setQrSize] = useState(108);
   const [dom, setDom] = useState("");
   const [layout, setLayout] = useState("auto"); // 'auto' | 'full' | 'compact'
 
@@ -480,6 +481,27 @@ export default function App() {
               ))}
 
               <label className="fld">
+                <span className="fld__lb urdu-text">QR کا سائز ({qrSize}px)</span>
+                <div className="inkrow">
+                  <input
+                    type="range"
+                    min="74"
+                    max="150"
+                    step="2"
+                    value={qrSize}
+                    onChange={(e) => setQrSize(Number(e.target.value))}
+                  />
+                  <button
+                    className="btn btn--ghost"
+                    type="button"
+                    onClick={() => setQrSize(108)}
+                  >
+                    ڈیفالٹ
+                  </button>
+                </div>
+              </label>
+
+              <label className="fld">
                 <span className="fld__lb urdu-text">QR کا رنگ</span>
                 <div className="inkrow">
                   <input
@@ -637,7 +659,7 @@ export default function App() {
 
                 <div className="cert-top__cell cert-top__cell--l">
                   <div className="cert-qr-block">
-                    <StyledQr value={qrTarget} size={74} dark={ink} />
+                    <StyledQr value={qrTarget} size={qrSize} dark={ink} />
                     <span className="cert-qr-no ltr-center">
                       {valOrDefault("permitNo")}
                     </span>

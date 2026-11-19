@@ -478,7 +478,7 @@ code {
   text-align: justify;
 }
 
-/* ---------- Data table: 4 equal columns ---------- */
+/* ---------- Data table: Exact Screenshot Layout ---------- */
 .cert-tbl {
   width: 100%;
   border-collapse: collapse;
@@ -492,21 +492,21 @@ code {
 
 .cert-tbl td {
   border: 1px solid var(--cert-line);
-  padding: 5px 8px;
+  padding: 5px 10px;
   vertical-align: middle;
-  text-align: center;
-  font-size: 11.5px;
-  line-height: 1.45;
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.42;
   word-break: break-word;
-  white-space: pre-line;
+  white-space: normal;
   color: var(--cert-ink);
 }
 
 .cert-tbl td.cert-bar {
   background: var(--cert-fill);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
-  height: 30px;
+  height: 28px;
   padding: 4px 10px;
   text-align: center;
 }
@@ -536,11 +536,11 @@ code {
 }
 
 .cert-tbl tr.h-standard td {
-  height: 32px;
+  height: 30px;
 }
 
 .cert-tbl tr.h-tall td {
-  height: 46px;
+  height: 44px;
 }
 
 /* ---------- Declarations ---------- */
@@ -626,7 +626,7 @@ code {
   }
   .cert-tbl td {
     font-size: 11px;
-    padding: 4px 5px;
+    padding: 4px 6px;
   }
   .grid {
     padding: 12px;
