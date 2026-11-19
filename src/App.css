@@ -10,20 +10,22 @@
   --teal: #1C7C6F;
   --green: #00875a;
 
-  /* ---- values measured directly from the reference PDF ---- */
-  --cert-line: #CED0D5;   /* border  rgb(0.8078,0.8118,0.8353) */
-  --cert-fill: #ECF0F1;   /* bar/label fill rgb(0.9255,0.9412,0.9451) */
-  --cert-ink: #0A0A0A;    /* text     rgb(0,0,0) */
+  /* Reference PDF exact border, fill, and ink values */
+  --cert-line: #B8BEC6;
+  --cert-fill: #E9ECEF;
+  --cert-ink: #111827;
 }
 
 * {
   box-sizing: border-box;
 }
 
-
-
-
 .top-ajeer-logo {
+  height: 46px;
+  object-fit: contain;
+}
+
+.top-ajeer-text {
   height: 36px;
   object-fit: contain;
 }
@@ -46,6 +48,12 @@ html, body {
 .ltr-right {
   direction: ltr;
   text-align: right;
+  unicode-bidi: isolate;
+}
+
+.ltr-center {
+  direction: ltr;
+  text-align: center;
   unicode-bidi: isolate;
 }
 
@@ -331,9 +339,7 @@ code {
 }
 
 /* =========================================================
-   CERTIFICATE SHEET — geometry measured from the reference PDF
-   A4 @96dpi = 794 x 1123px   |   reference used 595 x 842pt
-   content column 495.3pt = 660px, table columns 123.8pt = 165px
+   CERTIFICATE SHEET — Exact Reference PDF Layout
    ========================================================= */
 .prevwrap {
   min-width: 0;
@@ -353,21 +359,21 @@ code {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  width: 794px;               /* exact A4 width  */
-  min-height: 1123px;         /* exact A4 height */
+  width: 794px;
+  min-height: 1123px;
   margin: 0 auto;
   background: #ffffff;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
-  padding: 40px 67px 44px;    /* ≈ 30pt top / 50pt sides / 33pt bottom */
+  padding: 36px 52px 36px;
   display: flex;
   flex-direction: column;
   color: var(--cert-ink);
   font-family: 'Cairo', 'Noto Naskh Arabic', Arial, sans-serif;
-  font-size: 12px;            /* 8.99pt in the PDF */
-  line-height: 1.4;
+  font-size: 11.5px;
+  line-height: 1.45;
 }
 
-/* ---------- Header band: 3 bordered cells, 112px tall ---------- */
+/* ---------- Header band: Outer border only, NO vertical divider lines ---------- */
 .cert-top-header {
   display: table;
   width: 100%;
@@ -382,106 +388,59 @@ code {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
-  height: 112px;
+  height: 104px;
   padding: 8px 10px;
+  border: none;
 }
 
-/* .cert-top__cell--r {
-  width: 32.3%;
-  border-left: 1px solid var(--cert-line);
-  padding: 8px 6px;
-} */
+.cert-top__cell--r {
+  width: 35%;
+}
 
-/* .cert-top__cell--c {
-  width: 52.1%;
-  border-left: 1px solid var(--cert-line);
-  padding: 10px 14px;
-} */
+.cert-top__cell--c {
+  width: 46%;
+}
 
 .cert-top__cell--l {
-  width: 15.6%;
+  width: 19%;
   padding: 6px 4px;
 }
 
-.cert-marks {
+.ministry-text {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.ministry-text-font {
+  font-size: 8.0px;
+  font-weight: 700;
+  color: #369193;
+  line-height: 1.35;
+}
+
+.cert-marks,
+.cert-top-header .cert-marks {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .cert-main-title {
   margin: 0;
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.4;
   color: var(--cert-ink);
-}
-
-.cert-permit-no {
-  margin-top: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--cert-ink);
-  letter-spacing: .2px;
-}
-
-/* neutral sample marks (never government / provider branding) */
-.cert-hrsd {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.cert-hrsd__text {
-  display: flex;
-  flex-direction: column;
-  font-size: 11px;
-  font-weight: 700;
-  color: #475569;
-  line-height: 1.5;
-  text-align: right;
-}
-
-.cert-ajeer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1px;
-  color: #334155;
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 1.2;
-}
-
-.cert-ajeer small {
-  color: #64748b;
-  font: 700 7.5px/1.2 Arial, sans-serif;
-  letter-spacing: 1.6px;
-}
-
-.sample-mark-icon {
-  font-size: 15px;
-  line-height: 1;
-  color: #64748b;
-}
-
-.cert-sample-note {
-  font-size: 9.5px;
-  line-height: 1.5;
-  color: #64748b;
-  text-align: center;
-  font-weight: 600;
-  max-width: 96px;
 }
 
 .cert-qr-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1px;
-  line-height: 1.35;
+  justify-content: center;
+  gap: 2px;
 }
 
 .cert-qr-box {
@@ -497,36 +456,29 @@ code {
 }
 
 .cert-qr-no {
-  font-size: 10.5px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   color: var(--cert-ink);
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .cert-qr-hint {
-  font-size: 9.5px;
+  font-size: 9px;
   color: #374151;
   text-align: center;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
-/* ---------- Intro paragraph (3 lines, justified, 1.66 line-height) ---------- */
+/* ---------- Intro paragraph ---------- */
 .cert-intro {
-  margin: 34px 0 25px;
-  font-size: 12px;
-  line-height: 1.66;
+  margin: 26px 0 22px;
+  font-size: 11.5px;
+  line-height: 1.75;
   color: var(--cert-ink);
   text-align: justify;
 }
 
-/* ---------- Data table: 4 equal columns, 1px borders, grey label cells ---------- */
-.cert-top-header .cert-marks {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
+/* ---------- Data table: 4 equal columns ---------- */
 .cert-tbl {
   width: 100%;
   border-collapse: collapse;
@@ -540,62 +492,74 @@ code {
 
 .cert-tbl td {
   border: 1px solid var(--cert-line);
-  padding: 3px 9px;
+  padding: 5px 8px;
   vertical-align: middle;
   text-align: center;
-  font-size: 12px;
+  font-size: 11.5px;
   line-height: 1.45;
   word-break: break-word;
+  white-space: pre-line;
   color: var(--cert-ink);
 }
 
-/* section bar row (full-bleed grey strip inside the table) */
 .cert-tbl td.cert-bar {
   background: var(--cert-fill);
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
-  height: 33px;
+  height: 30px;
   padding: 4px 10px;
   text-align: center;
 }
 
-/* grey label cell */
 .cert-tbl td.cert-lbl-cell {
   background: var(--cert-fill);
   font-weight: 600;
+  text-align: right;
 }
 
-/* white value cell */
+.cert-tbl td.cert-lbl-center {
+  text-align: center;
+}
+
 .cert-tbl td.cert-val-cell {
   background: #ffffff;
   font-weight: 400;
+  text-align: right;
+}
+
+.cert-tbl td.cert-val-cell.ltr {
+  text-align: left;
+}
+
+.cert-tbl td.cert-val-cell.ltr-right {
+  text-align: right;
 }
 
 .cert-tbl tr.h-standard td {
-  height: 26px;
+  height: 32px;
 }
 
 .cert-tbl tr.h-tall td {
-  height: 40px;
+  height: 46px;
 }
 
 /* ---------- Declarations ---------- */
 .cert-decl {
-  margin-top: 15px;
+  margin-top: 16px;
   page-break-inside: avoid;
 }
 
 .cert-decl__title {
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--cert-ink);
-  text-align: right;
-  margin-bottom: 6px;
+  text-align: center;
+  margin-bottom: 4px;
   line-height: 1.4;
 }
 
 .cert-decl__sub {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   color: var(--cert-ink);
   text-align: right;
@@ -611,11 +575,11 @@ code {
 
 .cert-decl__list li {
   position: relative;
-  font-size: 11.5px;
-  line-height: 1.75;
+  font-size: 11px;
+  line-height: 1.7;
   color: var(--cert-ink);
-  margin-bottom: 3px;
-  padding-right: 13px;
+  margin-bottom: 4px;
+  padding-right: 12px;
   text-align: justify;
 }
 
@@ -625,61 +589,17 @@ code {
   right: 0;
   top: 0;
   font-size: 12px;
-  line-height: 1.7;
 }
 
 /* ---------- Footer ---------- */
 .cert-footer {
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 14px;
   text-align: center;
-  font-size: 11px;
+  font-size: 10.5px;
   line-height: 1.7;
   color: var(--cert-ink);
   page-break-inside: avoid;
-}
-
-.cert-footer a {
-  color: var(--cert-ink);
-  text-decoration: underline;
-}
-
-.cert-footer__badge {
-  margin-top: 3px;
-  padding-top: 7px;
-  border-top: 1px solid var(--cert-line);
-  font-size: 10.5px;
-  font-weight: 800;
-  color: #991b1b;
-  letter-spacing: .2px;
-}
-
-/* ---------- Sample markings (must stay visible) ---------- */
-.sample-watermark {
-  position: absolute;
-  z-index: 5;
-  top: 44%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-31deg);
-  color: rgba(185, 28, 28, 0.16);
-  font: 900 48px/1 Arial, sans-serif;
-  letter-spacing: 3px;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-}
-
-.sample-top-stamp {
-  position: relative;
-  z-index: 6;
-  margin: 0 0 8px;
-  padding: 5px 8px;
-  border: 1.5px solid #b91c1c;
-  color: #991b1b;
-  background: rgba(255, 255, 255, .92);
-  text-align: center;
-  font: 800 9px/1.4 Arial, sans-serif;
-  letter-spacing: 1.1px;
 }
 
 /* Mobile Responsive Screen View */
@@ -688,9 +608,6 @@ code {
     width: 100%;
     padding: 18px 14px;
     min-height: auto;
-  }
-  .cert-top__cell--r {
-    flex: 1 1 auto;
   }
 }
 
@@ -702,12 +619,6 @@ code {
     display: block;
     height: auto;
     width: auto;
-  }
-  .cert-top__cell--c {
-    border-left: 0;
-    border-top: 1px solid var(--cert-line);
-    border-bottom: 1px solid var(--cert-line);
-    padding: 8px 6px;
   }
   .cert-top-header .cert-marks {
     flex-wrap: wrap;
@@ -941,39 +852,31 @@ code {
     max-width: none !important;
     margin: 0 !important;
     box-shadow: none !important;
-    padding: 10.6mm 17.7mm 11.6mm !important;
+    padding: 10mm 14mm !important;
     box-sizing: border-box !important;
   }
 
   .cert-top-header {
     display: table !important;
     table-layout: fixed !important;
+    border: 1px solid var(--cert-line) !important;
   }
 
   .cert-top__cell {
     display: table-cell !important;
     vertical-align: middle !important;
+    border: none !important;
   }
 
   .cert-top__cell--r {
-    width: 32.3% !important;
+    width: 35% !important;
   }
 
   .cert-top__cell--c {
-    width: 52.1% !important;
-    border-left: 1px solid var(--cert-line) !important;
+    width: 46% !important;
   }
 
   .cert-top__cell--l {
-    width: 15.6% !important;
-  }
-
-  .sample-watermark {
-    color: rgba(185, 28, 28, 0.19) !important;
-    font-size: 45px !important;
-  }
-
-  .sample-top-stamp {
-    background: #fff !important;
+    width: 19% !important;
   }
 }
