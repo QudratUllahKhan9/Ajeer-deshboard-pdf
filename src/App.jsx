@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import QRCodeStyling from "qr-code-styling";
+import html2pdf from "html2pdf.js";
 import {
   API,
   saveRecord,
@@ -21,7 +22,7 @@ import ajeerLogoImg from "./assets/ajeer-logo.png";
 import hrsdStarImg from "./assets/hrsd-star.png";
 
 const QR_LOOK = {
-  type: "svg",
+  type: "canvas",
   margin: 1,
   qrOptions: {
     errorCorrectionLevel: "M",
@@ -278,18 +279,52 @@ export default function App() {
     setBusy(false);
   };
 
-  const downloadCertificatePdf = (customName) => {
-    const prevTitle = document.title;
-    const fileTitle =
-      customName || valOrDefault("workerName") || valOrDefault("permitNo");
-    document.title = fileTitle.replace(/\s+/g, "_");
-    window.print();
-    setTimeout(() => {
-      document.title = prevTitle;
-    }, 500);
+  const downloadCertificatePdf = async (customName) => {
+    const element = document.getElementById("sample-certificate-pdf");
+    if (!element) {
+      setErr("سرٹیفکیٹ عنصر نہیں ملا");
+      return;
+    }
+
+    setBusy(true);
+    setErr("");
+    try {
+      const fileTitle = (
+        customName ||
+        valOrDefault("workerName") ||
+        valOrDefault("permitNo") ||
+        "ajeer-permit"
+      )
+        .trim()
+        .replace(/\s+/g, "_");
+
+      const opt = {
+        margin: [5, 5, 5, 5],
+        filename: `${fileTitle}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          letterRendering: true,
+          scrollY: 0,
+        },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+        },
+      };
+
+      await html2pdf().set(opt).from(element).save();
+      flash("PDF ڈاؤن لوڈ ہو گئی ✓");
+    } catch (e) {
+      setErr("PDF ڈاؤن لوڈ میں خرابی: " + e.message);
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const openRecord = async (id, autoPrint = false) => {
+  const openRecord = async (id, autoDownload = false) => {
     setBusy(true);
     setErr("");
     try {
@@ -298,13 +333,13 @@ export default function App() {
       setForm({ ...EMPTY, ...r.permit });
       setTab("new");
       flash("ریکارڈ لوڈ ہو گیا: " + id);
-      if (autoPrint) {
+      if (autoDownload) {
         setTimeout(
           () =>
             downloadCertificatePdf(
               r.permit.workerName || r.permit.permitNo || id,
             ),
-          350,
+          500,
         );
       }
     } catch (e) {
@@ -498,9 +533,10 @@ export default function App() {
               <button
                 className="btn btn--pdf"
                 type="button"
+                disabled={busy}
                 onClick={() => downloadCertificatePdf()}
               >
-                PDF ڈاؤن لوڈ کریں
+                {busy ? "ڈاؤن لوڈ ہو رہا ہے..." : "PDF ڈاؤن لوڈ کریں"}
               </button>
               {record && (
                 <button
@@ -562,9 +598,10 @@ export default function App() {
               <button
                 className="btn btn--pdf btn--sm"
                 type="button"
+                disabled={busy}
                 onClick={() => downloadCertificatePdf()}
               >
-                تحميل / طباعة PDF
+                {busy ? "ڈاؤن لوڈ ہو رہا ہے..." : "ڈاؤن لوڈ PDF"}
               </button>
             </div>
 
@@ -619,95 +656,114 @@ export default function App() {
               </p>
 
               {/* Data Table */}
-          <table className="cert-tbl">
-  <colgroup>
-    <col />
-    <col />
-    <col />
-    <col />
-  </colgroup>
-  <tbody>
-    {/* 1. بيانات العامل */}
-    <tr>
-      <td className="cert-bar" colSpan={4}>
-        بيانات العامل
-      </td>
-    </tr>
-    <tr className="h-standard">
-      <td className="cert-lbl-cell">اسم العامل</td>
-      <td className="cert-val-cell ltr-right">
-        {valOrDefault("workerName")}
-      </td>
-      <td className="cert-lbl-cell">المهنة</td>
-      <td className="cert-val-cell">{valOrDefault("profession")}</td>
-    </tr>
-    <tr className="h-standard">
-      <td className="cert-lbl-cell">رقم الهوية / الإقامة</td>
-      <td className="cert-val-cell ltr">{valOrDefault("idNumber")}</td>
-      <td className="cert-lbl-cell">الجنسية</td>
-      <td className="cert-val-cell">{valOrDefault("nationality")}</td>
-    </tr>
+              <table className="cert-tbl">
+                <colgroup>
+                  <col />
+                  <col />
+                  <col />
+                  <col />
+                </colgroup>
+                <tbody>
+                  {/* 1. بيانات العامل */}
+                  <tr>
+                    <td className="cert-bar" colSpan={4}>
+                      بيانات العامل
+                    </td>
+                  </tr>
+                  <tr className="h-standard">
+                    <td className="cert-lbl-cell">اسم العامل</td>
+                    <td className="cert-val-cell ltr-right">
+                      {valOrDefault("workerName")}
+                    </td>
+                    <td className="cert-lbl-cell">المهنة</td>
+                    <td className="cert-val-cell">
+                      {valOrDefault("profession")}
+                    </td>
+                  </tr>
+                  <tr className="h-standard">
+                    <td className="cert-lbl-cell">رقم الهوية / الإقامة</td>
+                    <td className="cert-val-cell ltr">
+                      {valOrDefault("idNumber")}
+                    </td>
+                    <td className="cert-lbl-cell">الجنسية</td>
+                    <td className="cert-val-cell">
+                      {valOrDefault("nationality")}
+                    </td>
+                  </tr>
 
-    {/* 2. بيانات مقدم الخدمة */}
-    <tr>
-      <td className="cert-bar" colSpan={4}>
-        بيانات مقدم الخدمة
-      </td>
-    </tr>
-    <tr className="h-tall">
-      <td className="cert-lbl-cell">المنشأة المقدمة للخدمة</td>
-      <td className="cert-val-cell">{valOrDefault("providerCompany")}</td>
-      <td className="cert-lbl-cell cert-lbl-center">
-        رقم المنشأة في وزارة الموارد البشرية و التنمية الإجتماعية
-      </td>
-      <td className="cert-val-cell ltr">{valOrDefault("providerCr")}</td>
-    </tr>
+                  {/* 2. بيانات مقدم الخدمة */}
+                  <tr>
+                    <td className="cert-bar" colSpan={4}>
+                      بيانات مقدم الخدمة
+                    </td>
+                  </tr>
+                  <tr className="h-tall">
+                    <td className="cert-lbl-cell">المنشأة المقدمة للخدمة</td>
+                    <td className="cert-val-cell">
+                      {valOrDefault("providerCompany")}
+                    </td>
+                    <td className="cert-lbl-cell cert-lbl-center">
+                      رقم المنشأة في وزارة الموارد البشرية و التنمية الإجتماعية
+                    </td>
+                    <td className="cert-val-cell ltr">
+                      {valOrDefault("providerCr")}
+                    </td>
+                  </tr>
 
-    {/* 3. بيانات المستفيد من الخدمة */}
-    <tr>
-      <td className="cert-bar" colSpan={4}>
-        بيانات المستفيد من الخدمة
-      </td>
-    </tr>
-    <tr className="h-tall">
-      <td className="cert-lbl-cell">المنشأة المستفيدة من الخدمة</td>
-      <td className="cert-val-cell">{valOrDefault("beneficiaryCompany")}</td>
-      <td className="cert-lbl-cell cert-lbl-center">
-        رقم المنشأة في وزارة الموارد البشرية و التنمية الإجتماعية
-      </td>
-      <td className="cert-val-cell ltr">{valOrDefault("beneficiaryCr")}</td>
-    </tr>
+                  {/* 3. بيانات المستفيد من الخدمة */}
+                  <tr>
+                    <td className="cert-bar" colSpan={4}>
+                      بيانات المستفيد من الخدمة
+                    </td>
+                  </tr>
+                  <tr className="h-tall">
+                    <td className="cert-lbl-cell">المنشأة المستفيدة من الخدمة</td>
+                    <td className="cert-val-cell">
+                      {valOrDefault("beneficiaryCompany")}
+                    </td>
+                    <td className="cert-lbl-cell cert-lbl-center">
+                      رقم المنشأة في وزارة الموارد البشرية و التنمية الإجتماعية
+                    </td>
+                    <td className="cert-val-cell ltr">
+                      {valOrDefault("beneficiaryCr")}
+                    </td>
+                  </tr>
 
-    {/* 4. بيانات التصريح */}
-    <tr>
-      <td className="cert-bar" colSpan={4}>
-        بيانات التصريح
-      </td>
-    </tr>
-    {!compact && (
-      <tr className="h-standard">
-        <td className="cert-lbl-cell">نبذة عن التعاقد</td>
-        <td className="cert-val-cell ltr" colSpan={3}>
-          {valOrDefault("contractNote")}
-        </td>
-      </tr>
-    )}
-    <tr className="h-standard">
-      <td className="cert-lbl-cell">تاريخ بداية التصريح</td>
-      <td className="cert-val-cell ltr">{valOrDefault("startDate")}</td>
-      <td className="cert-lbl-cell">تاريخ نهاية التصريح</td>
-      <td className="cert-val-cell ltr">{valOrDefault("endDate")}</td>
-    </tr>
-    {!compact && (
-      <tr className="h-standard">
-        <td className="cert-lbl-cell">مواقع العمل</td>
-        <td className="cert-val-cell ltr-right" colSpan={3}>
-          {valOrDefault("workSites")}
-        </td>
-      </tr>
-    )}
-  </tbody>
-</table>
+                  {/* 4. بيانات التصريح */}
+                  <tr>
+                    <td className="cert-bar" colSpan={4}>
+                      بيانات التصريح
+                    </td>
+                  </tr>
+                  {!compact && (
+                    <tr className="h-standard">
+                      <td className="cert-lbl-cell">نبذة عن التعاقد</td>
+                      <td className="cert-val-cell ltr" colSpan={3}>
+                        {valOrDefault("contractNote")}
+                      </td>
+                    </tr>
+                  )}
+                  <tr className="h-standard">
+                    <td className="cert-lbl-cell">تاريخ بداية التصريح</td>
+                    <td className="cert-val-cell ltr">
+                      {valOrDefault("startDate")}
+                    </td>
+                    <td className="cert-lbl-cell">تاريخ نهاية التصريح</td>
+                    <td className="cert-val-cell ltr">
+                      {valOrDefault("endDate")}
+                    </td>
+                  </tr>
+                  {!compact && (
+                    <tr className="h-standard">
+                      <td className="cert-lbl-cell">مواقع العمل</td>
+                      <td className="cert-val-cell ltr-right" colSpan={3}>
+                        {valOrDefault("workSites")}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
               {/* 5. إقرارات */}
               <div className="cert-decl">
                 <div className="cert-decl__title">إقرارات</div>
@@ -742,7 +798,7 @@ export default function App() {
                   أجير (https://ajeer.com.sa)
                 </div>
                 <div>
-                  * خدمة معتمدة من وزارة الموارد البشرية والتنمية الإجتماعية *
+                  - خدمة معتمدة من وزارة الموارد البشرية والتنمية الإجتماعية *
                 </div>
               </div>
             </article>
