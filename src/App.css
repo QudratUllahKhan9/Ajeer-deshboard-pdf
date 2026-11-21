@@ -16,7 +16,9 @@
   --cert-ink: #111827;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -55,6 +57,13 @@ html, body {
   direction: ltr;
   text-align: center;
   unicode-bidi: isolate;
+}
+
+/* Numbers, codes aur dates ko right-aligned rakhte hue sahi order mein dikhane ke liye */
+.bidi-ltr {
+  direction: ltr;
+  unicode-bidi: embed;
+  display: inline-block;
 }
 
 .urdu {
@@ -478,7 +487,7 @@ code {
   text-align: justify;
 }
 
-/* ---------- Data table: Exact Screenshot Layout ---------- */
+/* ---------- Data table: Second Image Alignment ---------- */
 .cert-tbl {
   width: 100%;
   border-collapse: collapse;
@@ -496,7 +505,7 @@ code {
   vertical-align: middle;
   text-align: right;
   font-size: 11px;
-  line-height: 1.42;
+  line-height: 1.38;
   word-break: break-word;
   white-space: normal;
   color: var(--cert-ink);
@@ -527,10 +536,7 @@ code {
   text-align: right;
 }
 
-.cert-tbl td.cert-val-cell.ltr {
-  text-align: left;
-}
-
+.cert-tbl td.cert-val-cell.ltr,
 .cert-tbl td.cert-val-cell.ltr-right {
   text-align: right;
 }

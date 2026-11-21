@@ -678,113 +678,113 @@ export default function App() {
               </p>
 
               {/* Data Table */}
-              <table className="cert-tbl">
-                <colgroup>
-                  <col />
-                  <col />
-                  <col />
-                  <col />
-                </colgroup>
-                <tbody>
-                  {/* 1. بيانات العامل */}
-                  <tr>
-                    <td className="cert-bar" colSpan={4}>
-                      بيانات العامل
-                    </td>
-                  </tr>
-                  <tr className="h-standard">
-                    <td className="cert-lbl-cell">اسم العامل</td>
-                    <td className="cert-val-cell ltr-right">
-                      {valOrDefault("workerName")}
-                    </td>
-                    <td className="cert-lbl-cell">المهنة</td>
-                    <td className="cert-val-cell">
-                      {valOrDefault("profession")}
-                    </td>
-                  </tr>
-                  <tr className="h-standard">
-                    <td className="cert-lbl-cell">رقم الهوية / الإقامة</td>
-                    <td className="cert-val-cell ltr">
-                      {valOrDefault("idNumber")}
-                    </td>
-                    <td className="cert-lbl-cell">الجنسية</td>
-                    <td className="cert-val-cell">
-                      {valOrDefault("nationality")}
-                    </td>
-                  </tr>
+             <table className="cert-tbl">
+  <colgroup>
+    <col />
+    <col />
+    <col />
+    <col />
+  </colgroup>
+  <tbody>
+    {/* 1. بيانات العامل */}
+    <tr>
+      <td className="cert-bar" colSpan={4}>
+        بيانات العامل
+      </td>
+    </tr>
+    <tr className="h-standard">
+      <td className="cert-lbl-cell">اسم العامل</td>
+      <td className="cert-val-cell ltr-right">
+        {valOrDefault("workerName")}
+      </td>
+      <td className="cert-lbl-cell">المهنة</td>
+      <td className="cert-val-cell">
+        {valOrDefault("profession")}
+      </td>
+    </tr>
+    <tr className="h-standard">
+      <td className="cert-lbl-cell">رقم الهوية / الإقامة</td>
+      <td className="cert-val-cell">
+        <span className="bidi-ltr">{valOrDefault("idNumber")}</span>
+      </td>
+      <td className="cert-lbl-cell">الجنسية</td>
+      <td className="cert-val-cell">
+        {valOrDefault("nationality")}
+      </td>
+    </tr>
 
-                  {/* 2. بيانات مقدم الخدمة */}
-                  <tr>
-                    <td className="cert-bar" colSpan={4}>
-                      بيانات مقدم الخدمة
-                    </td>
-                  </tr>
-                  <tr className="h-tall">
-                    <td className="cert-lbl-cell">المنشأة المقدمة للخدمة</td>
-                    <td className="cert-val-cell">
-                      {valOrDefault("providerCompany")}
-                    </td>
-                    <td className="cert-lbl-cell cert-lbl-center">
-                      رقم المنشأة في وزارة الموارد البشرية و التنمية الإجتماعية
-                    </td>
-                    <td className="cert-val-cell ltr">
-                      {valOrDefault("providerCr")}
-                    </td>
-                  </tr>
+    {/* 2. بيانات مقدم الخدمة */}
+    <tr>
+      <td className="cert-bar" colSpan={4}>
+        بيانات مقدم الخدمة
+      </td>
+    </tr>
+    <tr className="h-tall">
+      <td className="cert-lbl-cell">المنشأة المقدمة للخدمة</td>
+      <td className="cert-val-cell">
+        {valOrDefault("providerCompany")}
+      </td>
+      <td className="cert-lbl-cell cert-lbl-center">
+        رقم المنشأة في وزارة الموارد البشرية و التنمية الإجتماعية
+      </td>
+      <td className="cert-val-cell">
+        <span className="bidi-ltr">{valOrDefault("providerCr")}</span>
+      </td>
+    </tr>
 
-                  {/* 3. بيانات المستفيد من الخدمة */}
-                  <tr>
-                    <td className="cert-bar" colSpan={4}>
-                      بيانات المستفيد من الخدمة
-                    </td>
-                  </tr>
-                  <tr className="h-tall">
-                    <td className="cert-lbl-cell">المنشأة المستفيدة من الخدمة</td>
-                    <td className="cert-val-cell">
-                      {valOrDefault("beneficiaryCompany")}
-                    </td>
-                    <td className="cert-lbl-cell cert-lbl-center">
-                      رقم المنشأة في وزارة الموارد البشرية و التنمية الإجتماعية
-                    </td>
-                    <td className="cert-val-cell ltr">
-                      {valOrDefault("beneficiaryCr")}
-                    </td>
-                  </tr>
+    {/* 3. بيانات المستفيد من الخدمة */}
+    <tr>
+      <td className="cert-bar" colSpan={4}>
+        بيانات المستفيد من الخدمة
+      </td>
+    </tr>
+    <tr className="h-tall">
+      <td className="cert-lbl-cell">المنشأة المستفيدة من الخدمة</td>
+      <td className="cert-val-cell">
+        {valOrDefault("beneficiaryCompany")}
+      </td>
+      <td className="cert-lbl-cell cert-lbl-center">
+        رقم المنشأة في وزارة الموارد البشرية و التنمية الإجتماعية
+      </td>
+      <td className="cert-val-cell">
+        <span className="bidi-ltr">{valOrDefault("beneficiaryCr")}</span>
+      </td>
+    </tr>
 
-                  {/* 4. بيانات التصريح */}
-                  <tr>
-                    <td className="cert-bar" colSpan={4}>
-                      بيانات التصريح
-                    </td>
-                  </tr>
-                  {!compact && (
-                    <tr className="h-standard">
-                      <td className="cert-lbl-cell">نبذة عن التعاقد</td>
-                      <td className="cert-val-cell ltr" colSpan={3}>
-                        {valOrDefault("contractNote")}
-                      </td>
-                    </tr>
-                  )}
-                  <tr className="h-standard">
-                    <td className="cert-lbl-cell">تاريخ بداية التصريح</td>
-                    <td className="cert-val-cell ltr">
-                      {valOrDefault("startDate")}
-                    </td>
-                    <td className="cert-lbl-cell">تاريخ نهاية التصريح</td>
-                    <td className="cert-val-cell ltr">
-                      {valOrDefault("endDate")}
-                    </td>
-                  </tr>
-                  {!compact && (
-                    <tr className="h-standard">
-                      <td className="cert-lbl-cell">مواقع العمل</td>
-                      <td className="cert-val-cell ltr-right" colSpan={3}>
-                        {valOrDefault("workSites")}
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+    {/* 4. بيانات التصريح */}
+    <tr>
+      <td className="cert-bar" colSpan={4}>
+        بيانات التصريح
+      </td>
+    </tr>
+    {!compact && (
+      <tr className="h-standard">
+        <td className="cert-lbl-cell">نبذة عن التعاقد</td>
+        <td className="cert-val-cell ltr-right" colSpan={3}>
+          {valOrDefault("contractNote")}
+        </td>
+      </tr>
+    )}
+    <tr className="h-standard">
+      <td className="cert-lbl-cell">تاريخ بداية التصريح</td>
+      <td className="cert-val-cell">
+        <span className="bidi-ltr">{valOrDefault("startDate")}</span>
+      </td>
+      <td className="cert-lbl-cell">تاريخ نهاية التصريح</td>
+      <td className="cert-val-cell">
+        <span className="bidi-ltr">{valOrDefault("endDate")}</span>
+      </td>
+    </tr>
+    {!compact && (
+      <tr className="h-standard">
+        <td className="cert-lbl-cell">مواقع العمل</td>
+        <td className="cert-val-cell" colSpan={3}>
+          {valOrDefault("workSites")}
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
 
               {/* 5. إقرارات */}
               <div className="cert-decl">
