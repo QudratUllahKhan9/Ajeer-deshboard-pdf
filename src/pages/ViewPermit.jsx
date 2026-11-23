@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // Deployed backend ka URL (phone se test = LAN IP ya deployed URL, localhost nahi)
-const API_URL = import.meta.env.VITE_API_URL || "https://ajeerbackend.vercel.app/";
+const API_URL = import.meta.env.VITE_API_URL || "https://ajeer-qiwa-se.vercel.app/";
 
 export default function ViewPermit() {
   const { permitNo } = useParams();

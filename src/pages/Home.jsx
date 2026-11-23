@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // Deployed backend ka URL yahan lagayein (phone se test = LAN IP ya deployed URL)
-const API_URL = import.meta.env.VITE_API_URL || "https://ajeerbackend.vercel.app/";
+const API_URL = import.meta.env.VITE_API_URL || "https://ajeer-qiwa-se.vercel.app/";
 
 export default function Home() {
   const [form, setForm] = useState({

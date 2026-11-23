@@ -7,17 +7,17 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ajeerbackend.vercel.app',
+        target: 'https://ajeer-qiwa-se.vercel.app',
         changeOrigin: true,
         secure: false,
       },
       '/qr': {
-        target: 'https://ajeerbackend.vercel.app',
+        target: 'https://ajeer-qiwa-se.vercel.app',
         changeOrigin: true,
         secure: false,
       },
       '/v': {
-        target: 'https://ajeerbackend.vercel.app',
+        target: 'https://ajeer-qiwa-se.vercel.app',
         changeOrigin: true,
         secure: false,
       }
