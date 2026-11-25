@@ -201,28 +201,9 @@ export default function App() {
   }, []);
 
   const prefill = useCallback(async () => {
-    const want = String(
-      import.meta.env.VITE_DEFAULT_ID || "b283254a",
-    ).toLowerCase();
-    try {
-      const r = await getRecord(want);
-      setRecord(r.permit);
-      setForm({ ...EMPTY, ...r.permit });
-      return;
-    } catch {
-      /* fallback to first item */
-    }
-    try {
-      const l = await listRecords("");
-      const first = l.items?.[0];
-      if (first?.permitId) {
-        const r = await getRecord(first.permitId);
-        setRecord(r.permit);
-        setForm({ ...EMPTY, ...r.permit });
-      }
-    } catch {
-      /* keep default EMPTY */
-    }
+    // Start with editable sample values. Do not automatically load a saved record.
+    setRecord(null);
+    setForm(EMPTY);
   }, []);
 
   useEffect(() => {
@@ -560,17 +541,18 @@ export default function App() {
               >
                 {busy ? "ڈاؤن لوڈ ہو رہا ہے..." : "PDF ڈاؤن لوڈ کریں"}
               </button>
-              {record && (
-                <button
-                  className="btn btn--ghost"
-                  onClick={() => {
-                    setRecord(null);
-                    setForm(EMPTY);
-                  }}
-                >
-                  نیا
-                </button>
-              )}
+              <button
+                className="btn btn--ghost"
+                type="button"
+                onClick={() => {
+                  setRecord(null);
+                  setForm(EMPTY);
+                  setTab("new");
+                  flash("نیا فارم تیار ہے — مثال کے ڈیٹا میں تبدیلی کریں");
+                }}
+              >
+                نیا Permit
+              </button>
               <button
                 className="btn btn--ghost"
                 onClick={downloadQr}
